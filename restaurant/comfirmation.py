@@ -30,3 +30,4 @@ def confirmation(request):
         }
 
         return render(request, 'restaurant/confirmation.html', context)
+
