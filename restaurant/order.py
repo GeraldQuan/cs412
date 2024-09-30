@@ -1,5 +1,5 @@
-import random
 from django.shortcuts import render
+import random
 
 def order(request):
     specials = ['Pizza', 'Burger', 'Pasta', 'Salad']

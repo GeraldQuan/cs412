@@ -6,3 +6,4 @@ urlpatterns = [
     path('order/', views.order, name='order'),
     path('confirmation/', views.confirmation, name='confirmation'),
 ]
+
