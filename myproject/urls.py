@@ -16,14 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from django.urls import include, path
-from restaurant import views as restaurant_views
+
 
 urlpatterns = [
-    path('restaurant/', include('restaurant.urls')),  # Include restaurant URLs
-    path('', restaurant_views.main, name='main'),  # Set the default route to restaurant's main view
-    # other paths...
     path('admin/', admin.site.urls),
-    path('', include('quotes.urls')),  # Make sure this line includes the quotes app
-    path('restaurant/', include('restaurant.urls')),
+    
+    path('restaurant/', include('restaurant.urls')),  # Optional if you need this
+
+    path('mini_fb/', include('mini_fb.urls')),  # This makes mini_fb the default route
 ]
+
