@@ -17,12 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    
-    path('restaurant/', include('restaurant.urls')),  # Optional if you need this
-
-    path('mini_fb/', include('mini_fb.urls')),  # This makes mini_fb the default route
+    path('admin/', admin.site.urls),  # Admin route
+    path('restaurant/', include('restaurant.urls')),  # Restaurant app
+    path('mini_fb/', include('mini_fb.urls')),  # Mini_fb app
+    path('', include('mini_fb.urls')),  # Set mini_fb as the default app for root URL
 ]
+
 
