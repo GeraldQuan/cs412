@@ -40,7 +40,13 @@ footer {
     text-align: center;
     margin: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 200px;
+    width: 220px;
+    transition: transform 0.3s ease; /* Smooth hover effect */
+}
+
+/* Profile card hover effect */
+.profile-card:hover {
+    transform: translateY(-10px); /* Lift effect on hover */
 }
 
 /* Profile image */
@@ -65,4 +71,3 @@ footer {
 .profile-card h3 strong {
     color: #2a2ac5; /* Dark blue for the name */
 }
-
