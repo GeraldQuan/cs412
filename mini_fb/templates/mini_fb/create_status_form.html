@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Post a Status Message for {{ profile.user.username }}</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the form fields -->
+    <button type="submit">Post Status</button>
+  </form>
+
+  <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+{% endblock %}
