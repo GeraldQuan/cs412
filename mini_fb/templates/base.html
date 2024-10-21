@@ -5,8 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiniFacebook</title>
+    <title>{% block title %}MiniFacebook{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'styles.css' %}">
+    {% block extra_head %}{% endblock %}
 </head>
 <body>
     <header>
@@ -17,19 +18,17 @@
         </nav>
     </header>
 
-    <div class="profile-container">
-        {% for profile in profiles %}
-        <div class="profile-card">
-            <img src="{{ profile.profile_image_url }}" alt="{{ profile.first_name }} {{ profile.last_name }}">
-            <h3><strong>{{ profile.first_name }} {{ profile.last_name }}</strong></h3>
-            <p>{{ profile.city }}</p>
-        </div>
-        {% endfor %}
+    <div class="content">
+        {% block content %}
+        <p>Welcome to MiniFacebook!</p>
+        {% endblock %}
     </div>
 
     <footer>
         <p>MiniFacebook &copy; 2024</p>
     </footer>
+
+    {% block extra_scripts %}{% endblock %}
 </body>
 </html>
 

@@ -1,7 +1,7 @@
 from django.contrib import admin
-from .models import Profile, StatusMessage
+from .models import Profile, StatusMessage, Image
 
-# Ensure you're not registering the same model twice
+# Register your models here
 admin.site.register(Profile)
 admin.site.register(StatusMessage)
-
+admin.site.register(Image)  # Add the Image model to the admin site

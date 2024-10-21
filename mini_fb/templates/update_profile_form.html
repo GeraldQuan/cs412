@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Update Profile for {{ profile.first_name }} {{ profile.last_name }}</h2>
+
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}  <!-- Render the form fields -->
+
+    <button type="submit">Update Profile</button>
+  </form>
+
+  <a href="{% url 'show_profile' profile.pk %}">Back to Profile</a>
+{% endblock %}

@@ -1,14 +1,9 @@
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.urls import reverse, reverse_lazy
+from .models import Profile, StatusMessage, Image
+from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm
 
-from django.views.generic import ListView
-from .models import Profile
-from django.shortcuts import render
-from django.views.generic import DetailView
-from .forms import CreateProfileForm
-from django.urls import reverse
-from django.views.generic import CreateView
-from .models import StatusMessage, Profile
-from .forms import CreateStatusMessageForm
-
+# View for creating a new status message with file uploads
 class CreateStatusMessageView(CreateView):
     model = StatusMessage
     form_class = CreateStatusMessageForm
@@ -17,13 +12,23 @@ class CreateStatusMessageView(CreateView):
     # Provide the profile to the form via context
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])
+        context['profile'] = Profile.objects.get(pk=self.kwargs['pk'])  # Get the profile using pk
         return context
 
-    # Attach the status message to the profile
+    # Attach the status message to the profile and handle image uploads
     def form_valid(self, form):
-        profile = Profile.objects.get(pk=self.kwargs['pk'])
+        profile = Profile.objects.get(pk=self.kwargs['pk'])  # Get the profile to attach the status message
         form.instance.profile = profile  # Attach the profile to the status message
+
+        # Save the status message first
+        sm = form.save()
+
+        # Handle file uploads
+        files = self.request.FILES.getlist('files')  # Get list of uploaded files
+        for file in files:
+            image = Image(image_file=file, status_message=sm)  # Create Image object for each file
+            image.save()  # Save image to the database
+        
         return super().form_valid(form)
 
     # After submission, redirect to the profile page
@@ -31,39 +36,63 @@ class CreateStatusMessageView(CreateView):
         return reverse('show_profile', kwargs={'pk': self.kwargs['pk']})
 
 
+# View for updating an existing status message
+class UpdateStatusMessageView(UpdateView):
+    model = StatusMessage
+    form_class = CreateStatusMessageForm
+    template_name = 'mini_fb/update_status_form.html'
+
+    def get_success_url(self):
+        # Redirect back to the profile page after updating
+        return reverse('show_profile', kwargs={'pk': self.object.profile.pk})
+
+
+# View for deleting an existing status message
+class DeleteStatusMessageView(DeleteView):
+    model = StatusMessage
+    template_name = 'mini_fb/delete_status_form.html'
+    context_object_name = 'status_message'
+
+    def get_success_url(self):
+        # Redirect to the profile page after deletion
+        return reverse_lazy('show_profile', kwargs={'pk': self.object.profile.pk})
+
+
+# View for updating an existing profile
+class UpdateProfileView(UpdateView):
+    model = Profile
+    form_class = UpdateProfileForm
+    template_name = 'mini_fb/update_profile_form.html'
+
+    def get_success_url(self):
+        return reverse('show_profile', kwargs={'pk': self.object.pk})
+
+
+# View for creating a new profile
 class CreateProfileView(CreateView):
     model = Profile
     form_class = CreateProfileForm
     template_name = 'mini_fb/create_profile_form.html'
 
     def get_success_url(self):
-        # Redirect to the newly created profile's page after form submission
         return reverse('show_profile', kwargs={'pk': self.object.pk})
 
 
-class CreateProfileView(CreateView):
-    model = Profile
-    form_class = CreateProfileForm
-    template_name = 'mini_fb/create_profile_form.html'
-
-    def get_success_url(self):
-        # Redirect to the newly created profile's page after form submission
-        return reverse('show_profile', kwargs={'pk': self.object.pk})
-
+# View for showing a profile page
 class ShowProfilePageView(DetailView):
     model = Profile
-    template_name = 'show_profile.html'  # Pointing to the template for profile display
+    template_name = 'mini_fb/show_profile.html'  # Pointing to the template for profile display
     context_object_name = 'profile'  # The context name in the template
 
 
+# View for showing all profiles
 class ShowAllProfilesView(ListView):
     model = Profile
-    template_name = 'show_all_profiles.html'
+    template_name = 'mini_fb/show_all_profiles.html'
     context_object_name = 'profiles'
 
-
     def get_queryset(self):
-        print("Creating profiles if none exist...")  
+        # Auto-create profiles for testing purposes if none exist
         if Profile.objects.count() == 0:
             Profile.objects.create(
                 first_name="Lionel", last_name="Messi", city="Rosario",
@@ -73,18 +102,5 @@ class ShowAllProfilesView(ListView):
                 first_name="LeBron", last_name="James", city="Akron",
                 profile_image_url="https://a.espncdn.com/combiner/i?img=/i/headshots/nba/players/full/1966.png"
             )
-            Profile.objects.create(
-                first_name="Michael", last_name="Jordan", city="Brooklyn",
-                profile_image_url="https://upload.wikimedia.org/wikipedia/commons/a/ae/Michael_Jordan_in_2014.jpg"
-            )
-            Profile.objects.create(
-                first_name="Kobe", last_name="Bryant", city="Philadelphia",
-                profile_image_url="https://cdn.nba.com/headshots/nba/latest/1040x760/977.png"
-            )
-            Profile.objects.create(
-                first_name="Jinping", last_name="Xi", city="Beijing",
-                profile_image_url="https://upload.wikimedia.org/wikipedia/commons/0/06/Xi_Jinping_in_July_2024_%28cropped%29.jpg"
-            )
-        
-        
         return Profile.objects.all()
+
