@@ -22,6 +22,21 @@
     </tr>
   </table>
 
+  <!-- Display Friends -->
+  <h3>Friends:</h3>
+  <ul>
+    {% for friend in profile.get_friends %}
+      <li><a href="{% url 'show_profile' friend.pk %}">{{ friend.first_name }} {{ friend.last_name }}</a></li>
+    {% empty %}
+      <li>No friends to show.</li>
+    {% endfor %}
+  </ul>
+
+  <!-- Links for friend suggestions and news feed -->
+  <a href="{% url 'friend_suggestions' profile.pk %}">View Friend Suggestions</a>
+  <br>
+  <a href="{% url 'news_feed' profile.pk %}">View News Feed</a>
+
   <h3>Status Messages:</h3>
   {% if profile.get_status_messages %}
     <ul>
@@ -39,25 +54,25 @@
           <p>No images for this status.</p>
         {% endif %}
 
-        <!-- Add the links to update and delete the status message -->
+        <!-- Links to update and delete the status message -->
         <a href="{% url 'update_status' status.pk %}">Update</a>
         <a href="{% url 'delete_status' status.pk %}">Delete</a>
-
       {% endfor %}
     </ul>
   {% else %}
     <p>No status messages available.</p>
   {% endif %}
 
-  <!-- Add the link to create a status message -->
+  <!-- Link to create a status message -->
   <a href="{% url 'create_status' profile.pk %}">Post a Status Message</a>
 
   <br>
 
-  <!-- Add the link to update the profile -->
+  <!-- Link to update the profile -->
   <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
 
   <br>
 
+  <!-- Link to go back to the list of all profiles -->
   <a href="{% url 'show_all_profiles' %}">Back to All Profiles</a>
 {% endblock %}

@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import (
     ShowAllProfilesView, ShowProfilePageView, CreateProfileView, 
-    CreateStatusMessageView, UpdateProfileView, UpdateStatusMessageView, DeleteStatusMessageView
+    CreateStatusMessageView, UpdateProfileView, UpdateStatusMessageView, 
+    DeleteStatusMessageView, CreateFriendView, ShowFriendSuggestionsView, ShowNewsFeedView
 )
 
 urlpatterns = [
@@ -21,4 +22,11 @@ urlpatterns = [
 
     # Show all profiles (homepage)
     path('', ShowAllProfilesView.as_view(), name='show_all_profiles'),
+
+    # Friend-related URLs
+    path('profile/<int:pk>/add_friend/<int:other_pk>/', CreateFriendView.as_view(), name='add_friend'),
+    path('profile/<int:pk>/friend_suggestions/', ShowFriendSuggestionsView.as_view(), name='friend_suggestions'),
+
+    # News feed URL
+    path('profile/<int:pk>/news_feed/', ShowNewsFeedView.as_view(), name='news_feed'),
 ]

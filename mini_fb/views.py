@@ -1,5 +1,7 @@
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse, reverse_lazy
+from django.views import View
+from django.shortcuts import get_object_or_404, redirect
 from .models import Profile, StatusMessage, Image
 from .forms import CreateProfileForm, CreateStatusMessageForm, UpdateProfileForm
 
@@ -104,3 +106,44 @@ class ShowAllProfilesView(ListView):
             )
         return Profile.objects.all()
 
+
+# View for adding a friend relationship
+class CreateFriendView(View):
+    def dispatch(self, request, *args, **kwargs):
+        # Retrieve the profiles based on primary keys from URL parameters
+        profile = get_object_or_404(Profile, pk=self.kwargs['pk'])
+        other_profile = get_object_or_404(Profile, pk=self.kwargs['other_pk'])
+        
+        # Use the add_friend method to create the friend relationship if not already friends
+        profile.add_friend(other_profile)
+        
+        # Redirect back to the profile page of the initiating profile
+        return redirect('show_profile', pk=profile.pk)
+
+
+# View for displaying friend suggestions
+class ShowFriendSuggestionsView(DetailView):
+    model = Profile
+    template_name = 'mini_fb/friend_suggestions.html'
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        # Get the profile object and suggest possible friends
+        context = super().get_context_data(**kwargs)
+        profile = self.get_object()
+        context['suggested_friends'] = profile.get_friend_suggestions()
+        return context
+
+
+# View for displaying the news feed
+class ShowNewsFeedView(DetailView):
+    model = Profile
+    template_name = 'mini_fb/news_feed.html'
+    context_object_name = 'profile'
+
+    def get_context_data(self, **kwargs):
+        # Get the profile's news feed
+        context = super().get_context_data(**kwargs)
+        profile = self.get_object()
+        context['news_feed'] = profile.get_news_feed()
+        return context
