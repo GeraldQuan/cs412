@@ -19,12 +19,12 @@
                 {% for profile in profiles %}
                 <tr>
                     <td>
-                        <a href="{% url 'show_profile' profile.pk %}">{{ profile.first_name }}</a>
+                        <a href="{% url 'view_profile' profile.pk %}">{{ profile.first_name }}</a>
                     </td>
                     <td>{{ profile.last_name }}</td>
                     <td>{{ profile.city }}</td>
                     <td>
-                        <a href="{% url 'show_profile' profile.pk %}">
+                        <a href="{% url 'view_profile' profile.pk %}">
                             {% if profile.profile_image_url %}
                                 <img src="{{ profile.profile_image_url }}" alt="{{ profile.first_name }}'s profile image" width="100">
                             {% else %}

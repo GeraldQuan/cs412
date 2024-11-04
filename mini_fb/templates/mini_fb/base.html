@@ -6,15 +6,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}MiniFacebook{% endblock %}</title>
+    <meta name="description" content="MiniFacebook - Connect with friends and share your moments.">
     <link rel="stylesheet" href="{% static 'styles.css' %}">
     {% block extra_head %}{% endblock %}
 </head>
 <body>
     <header>
         <h1>MiniFacebook</h1>
-        <!-- Add the Create New Profile link here -->
         <nav>
-            <a href="{% url 'create_profile' %}">Create New Profile</a>
+            {% if user.is_authenticated %}
+                <p>Welcome, {{ user.username }}!</p>
+                {% if user.profile %}
+                    <a href="{% url 'show_profile' %}">My Profile</a> |
+                {% endif %}
+                
+                <!-- Logout button using POST form -->
+                <form action="{% url 'logout' %}" method="post" style="display:inline;">
+                    {% csrf_token %}
+                    <button type="submit" aria-label="Logout">Logout</button>
+                </form>
+            {% else %}
+                <a href="{% url 'login' %}">Login</a> |
+                <a href="{% url 'create_profile' %}">Create New Profile</a>
+            {% endif %}
         </nav>
     </header>
 
@@ -26,6 +40,10 @@
 
     <footer>
         <p>MiniFacebook &copy; 2024</p>
+        <p>
+            <a href="{% url 'about' %}">About Us</a> | 
+            <a href="{% url 'contact' %}">Contact</a>
+        </p>
     </footer>
 
     {% block extra_scripts %}{% endblock %}

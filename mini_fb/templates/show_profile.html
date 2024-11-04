@@ -32,10 +32,12 @@
     {% endfor %}
   </ul>
 
-  <!-- Links for friend suggestions and news feed -->
-  <a href="{% url 'friend_suggestions' profile.pk %}">View Friend Suggestions</a>
-  <br>
-  <a href="{% url 'news_feed' profile.pk %}">View News Feed</a>
+  <!-- Links for friend suggestions and news feed, only for profile owner -->
+  {% if user.is_authenticated and user == profile.user %}
+    <a href="{% url 'friend_suggestions' profile.pk %}">View Friend Suggestions</a>
+    <br>
+    <a href="{% url 'news_feed' profile.pk %}">View News Feed</a>
+  {% endif %}
 
   <h3>Status Messages:</h3>
   {% if profile.get_status_messages %}
@@ -54,22 +56,28 @@
           <p>No images for this status.</p>
         {% endif %}
 
-        <!-- Links to update and delete the status message -->
-        <a href="{% url 'update_status' status.pk %}">Update</a>
-        <a href="{% url 'delete_status' status.pk %}">Delete</a>
+        <!-- Links to update and delete the status message, only for profile owner -->
+        {% if user.is_authenticated and user == profile.user %}
+          <a href="{% url 'update_status' status.pk %}">Update</a>
+          <a href="{% url 'delete_status' status.pk %}">Delete</a>
+        {% endif %}
       {% endfor %}
     </ul>
   {% else %}
     <p>No status messages available.</p>
   {% endif %}
 
-  <!-- Link to create a status message -->
-  <a href="{% url 'create_status' profile.pk %}">Post a Status Message</a>
+  <!-- Link to create a status message, only for profile owner -->
+  {% if user.is_authenticated and user == profile.user %}
+    <a href="{% url 'create_status' profile.pk %}">Post a Status Message</a>
+  {% endif %}
 
   <br>
 
-  <!-- Link to update the profile -->
-  <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+  <!-- Link to update the profile, only for profile owner -->
+  {% if user.is_authenticated and user == profile.user %}
+    <a href="{% url 'update_profile' profile.pk %}">Update Profile</a>
+  {% endif %}
 
   <br>
 
