@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Book Categories</h1>
+
+<a href="{% url 'category-add' %}" class="btn btn-primary">Add Category</a>
+
+<table class="table table-striped mt-4">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for category in categories %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ category.name }}</td>
+            <td>{{ category.description }}</td>
+            <td>
+                <a href="{% url 'category-detail' category.pk %}" class="btn btn-info btn-sm">View</a>
+                <a href="{% url 'category-edit' category.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                <a href="{% url 'category-delete' category.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4" class="text-center">No categories found. Add a new category!</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

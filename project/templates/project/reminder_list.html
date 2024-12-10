@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Reminders</h1>
+<a href="{% url 'reminder-create' %}" class="btn btn-primary">Add Reminder</a>
+<table>
+    <thead>
+        <tr>
+            <th>Book</th>
+            <th>Reminder Date</th>
+            <th>Notes</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for reminder in reminders %}
+        <tr>
+            <td>{{ reminder.book.title }}</td>
+            <td>{{ reminder.reminder_date }}</td>
+            <td>{{ reminder.notes }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Borrowers</h1>
+<a href="{% url 'borrower-create' %}" class="btn btn-primary">Add Borrower</a>
+<table>
+    <thead>
+        <tr>
+            <th>Borrower Name</th>
+            <th>Book</th>
+            <th>Borrow Date</th>
+            <th>Return Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for borrower in borrowers %}
+        <tr>
+            <td>{{ borrower.borrower_name }}</td>
+            <td>{{ borrower.book.title }}</td>
+            <td>{{ borrower.borrow_date }}</td>
+            <td>{{ borrower.return_date }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

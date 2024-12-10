@@ -1,73 +1,187 @@
-/* Reset margins and paddings */
+/* General Body Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #4A49CF; /* Background color for the entire page */
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
     margin: 0;
     padding: 0;
-}
-
-header {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    font-size: 2rem;
-}
-
-footer {
-    background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 1rem;
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-}
-
-/* Profile container */
-.profile-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin: 2rem;
-}
-
-/* Profile card */
-.profile-card {
-    background-color: white;
-    border-radius: 10px;
-    padding: 1rem;
-    text-align: center;
-    margin: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 220px;
-    transition: transform 0.3s ease; /* Smooth hover effect */
-}
-
-/* Profile card hover effect */
-.profile-card:hover {
-    transform: translateY(-10px); /* Lift effect on hover */
-}
-
-/* Profile image */
-.profile-card img {
-    width: 100%;
-    border-radius: 10px;
-    height: auto;
-}
-
-/* Profile name and city */
-.profile-card h3 {
-    margin: 0.5rem 0;
     color: #333;
-    font-size: 1.2rem;
 }
 
-.profile-card p {
-    margin: 0;
-    color: #555;
+/* Header Styling */
+h1, h2, h3 {
+    color: #0056b3;
+    margin-bottom: 20px;
 }
 
-.profile-card h3 strong {
-    color: #2a2ac5; /* Dark blue for the name */
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table th,
+table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+table th {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+table tr:hover {
+    background-color: #ddd;
+}
+
+/* Form Styling */
+form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+form input,
+form select,
+form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+form button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+form a {
+    color: #007bff;
+    text-decoration: none;
+    margin-left: 10px;
+}
+
+form a:hover {
+    text-decoration: underline;
+}
+
+/* Button Styling */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    text-align: center;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #bd2130;
+}
+
+.btn-warning {
+    background-color: #ffc107;
+    color: black;
+}
+
+.btn-warning:hover {
+    background-color: #e0a800;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #117a8b;
+}
+
+/* Links Styling */
+a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* Footer Styling */
+footer {
+    margin-top: 20px;
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Error Messages */
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: -10px;
+}
+
+/* Success Messages */
+.success {
+    color: green;
+    font-size: 14px;
+    margin-top: -10px;
 }

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{% if review %}Edit Review{% else %}Add Review{% endif %}</h1>
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+
+    <button type="submit" class="btn btn-primary">
+        {% if review %}Update Review{% else %}Submit Review{% endif %}
+    </button>
+    <a href="{% url 'book-list' %}" class="btn btn-secondary">Cancel</a>
+</form>
+{% endblock %}
