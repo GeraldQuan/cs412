@@ -13,6 +13,9 @@ from .forms import BookForm, BorrowerForm, ReminderForm, ReviewForm
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
+from django.views.generic import DetailView
+from django.views.generic import UpdateView
+from django.views.generic import DeleteView
 
 
 # Home View
@@ -110,6 +113,28 @@ class CategoryCreateView(LoginRequiredMixin, CreateView):
     fields = ['name', 'description']
     template_name = "project/category_form.html"
     success_url = reverse_lazy("category-list")
+
+class CategoryDetailView(DetailView):
+    """View to display details of a specific category."""
+    model = Category
+    template_name = "project/category_detail.html"
+    context_object_name = "category"
+
+class CategoryUpdateView(UpdateView):
+    """View to update an existing category."""
+    model = Category
+    fields = ['name', 'description']
+    template_name = "project/category_form.html"
+    success_url = reverse_lazy('category-list')  # Redirect to the category list after updating
+
+
+
+class CategoryDeleteView(DeleteView):
+    """View to delete a category."""
+    model = Category
+    template_name = "project/category_confirm_delete.html"
+    success_url = reverse_lazy('category-list')  # Redirect to the category list after deletion
+
 
 
 # Review Views

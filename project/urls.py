@@ -26,6 +26,12 @@ urlpatterns = [
     # Category-related URLs
     path('categories/', views.CategoryListView.as_view(), name='category-list'),
     path('categories/add/', views.CategoryCreateView.as_view(), name='category-add'),  # Add Category creation URL
+    path('categories/<int:pk>/', views.CategoryDetailView.as_view(), name='category-detail'),
+    path('categories/<int:pk>/edit/', views.CategoryUpdateView.as_view(), name='category-edit'),
+    path('categories/<int:pk>/delete/', views.CategoryDeleteView.as_view(), name='category-delete'),
+
+
+
 
     # Borrower-related URLs
     path('borrowers/', views.BorrowerListView.as_view(), name='borrower-list'),
